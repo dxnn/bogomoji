@@ -38,20 +38,20 @@ function go() {
     ticks++
 
     while(since() < 16) { // 60fps ftw
-      let x = rand(cw)
-      let y = rand(ch)
-      drawrand(size, x, y)
       tries++
 
-      let m = size * margin // emoji are squirrely
-      let mx = x - m/2
-      let my = y + m/2
-      let msize = size+m
-      if(test(wsp, ctx, pic, mx, my, msize)) {
-        copy(wsp, ctx, mx, my, msize)
+      let x = rand(cw)
+      let y = rand(ch)
+      let e = drawrand(wsp, x, y, size)
+
+      let [mx, my, msize] = marginize(x, y, size, margin)
+      let [c, w, p] = get_image_data([ctx, wsp, pic], mx, my, msize)
+
+      if(test(w, c, p)) {
+        drawstr(ctx, e, x, y, size)
         wins++
       } else {
-        copy(ctx, wsp, mx, my, msize)
+        wsp.putImageData(c, mx, my)
       }
     }
 
@@ -79,14 +79,32 @@ function go() {
   return draw
 }
 
+function marginize(x, y, size, margin) {
+  let m = size * margin // emoji are squirrely
+  let msize = size+m
+  let mx = x - m/2
+  let my = y - size - m/2
+  return [mx, my, msize]
+}
+
+function get_image_data(ctxs, x, y, size) {
+  return ctxs.map(ctx => ctx.getImageData(x, y, size, size))
+}
+
 function setGlobalAlpha(alpha) {
   ctx.globalAlpha *= alpha
   wsp.globalAlpha *= alpha
 }
 
-function drawrand(size, x, y) {
+function drawrand(ctx, x, y, size) {
   let e = all_the_emoji[rand(all_the_emoji.length)]
-  drawstr(e, x, y, size)
+  drawstr(ctx, e, x, y, size)
+  return e
+}
+
+function drawstr(ctx, s, x, y, size) {
+  ctx.font = size + 'px serif'
+  ctx.fillText(s, x, y)
 }
 
 function test(a, b, z, x, y, size) { // is a closer to z than b?
@@ -94,8 +112,8 @@ function test(a, b, z, x, y, size) { // is a closer to z than b?
 }
 
 function score(a, z, x, y, size) {
-  let ai = a.getImageData ? a.getImageData(x, y, size, -size) : a
-  let zi = z.getImageData ? z.getImageData(x, y, size, -size) : z
+  let ai = a.getImageData ? a.getImageData(x, y, size, size) : a
+  let zi = z.getImageData ? z.getImageData(x, y, size, size) : z
   return diff(ai.data, zi.data)
 }
 
@@ -117,18 +135,13 @@ function get_me_all_the_emoji() {
   return q
 }
 
-function drawstr(s, x, y, size) {
-  wsp.font = size + 'px serif'
-  wsp.fillText(s, x, y)
-}
-
 function rand(n) {
   return Math.floor(Math.random() * n)
 }
 
 function emojiplop(width=1000, height=1000, fontsize=100) { // extremely quotidian, not magick at all
   for(let s of all_the_emoji)
-    drawstr(s, rand(width), rand(height), fontsize)
+    drawstr(ctx, s, rand(width), rand(height), fontsize)
 }
 
 let since = (()=>{
