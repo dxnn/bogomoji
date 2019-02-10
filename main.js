@@ -1,24 +1,27 @@
 const el = document.getElementById.bind(document)
 const ctx = el('canvas').getContext('2d')
-const wsp = el('workspace').getContext('2d')
 const pic = el('picture').getContext('2d')
+const wsp = el('workspace').getContext('2d')
 
-let all_the_emoji = get_me_all_the_emoji()
-let cw = 1000
-let ch = 1000
-let alpha = 1
-let ratchet_top = 255
-let ratchet_bottom = 10
-let ratchet_chance = 0.03
-let ratchet_bounce = 40
-let ratchet_step = 1
-let margin = 0.3
+const image_path = 'hb.png'
+const all_the_emoji = get_me_all_the_emoji()
+
+const cw = 1000
+const ch = 1000
+const alpha = 1
+const ratchet_top = 255
+const ratchet_bottom = 10
+const ratchet_chance = 0.03
+const ratchet_bounce = 40
+const ratchet_step = 1
+const margin = 0.3
+
+let tries = 0
+let ticks = 0
+let wins = 0
 let stop = true
 
-let punch = []
-let judy = 0
-
-let img = new Image()
+const img = new Image()
 img.src = 'hb.png'
 img.onload = ev => pic.drawImage(img, 0, 0)
 
@@ -30,30 +33,38 @@ function go() {
   requestAnimationFrame(draw)
 
   function draw() {
-    let successes = 0
+    let old_wins = wins
     since(1)
-    judy++
+    ticks++
 
     while(since() < 16) { // 60fps ftw
       let x = rand(cw)
       let y = rand(ch)
       drawrand(size, x, y)
-      if(test(wsp, ctx, pic, x, y, size)) {
-        copy(wsp, ctx)
-        successes++
-        punch.push([1, judy, x, y, size])
+      tries++
+
+      let m = size * margin // emoji are squirrely
+      let mx = x - m/2
+      let my = y + m/2
+      let msize = size+m
+      if(test(wsp, ctx, pic, mx, my, msize)) {
+        copy(wsp, ctx, mx, my, msize)
+        wins++
       } else {
-        copy(ctx, wsp)
-        punch.push([0, judy, x, y, size])
+        copy(ctx, wsp, mx, my, msize)
       }
     }
 
-    if(!successes && ratchet > ratchet_bottom)
-      if(Math.random() < ratchet_chance)
-        ratchet -= ratchet_step
-
-    if(!successes)
+    if(wins === old_wins) {
       size += rand(ratchet - size) + rand(ratchet_bounce*2+1) - ratchet_bounce
+
+      if(alpha < 1)
+        setGlobalAlpha(alpha)
+
+      if(ratchet > ratchet_bottom)
+        if(Math.random() < ratchet_chance)
+          ratchet -= ratchet_step
+    }
 
     if(size < ratchet_bottom)
       size = ratchet_bottom
@@ -69,8 +80,8 @@ function go() {
 }
 
 function setGlobalAlpha(alpha) {
-  ctx.globalAlpha = alpha
-  wsp.globalAlpha = alpha
+  ctx.globalAlpha *= alpha
+  wsp.globalAlpha *= alpha
 }
 
 function drawrand(size, x, y) {
@@ -83,9 +94,8 @@ function test(a, b, z, x, y, size) { // is a closer to z than b?
 }
 
 function score(a, z, x, y, size) {
-  let m = size * margin // emoji are squirrely
-  let ai = a.getImageData ? a.getImageData(x-m/2, y+m/2, size+m, -size-m) : a
-  let zi = z.getImageData ? z.getImageData(x-m/2, y+m/2, size+m, -size-m) : z
+  let ai = a.getImageData ? a.getImageData(x, y, size, -size) : a
+  let zi = z.getImageData ? z.getImageData(x, y, size, -size) : z
   return diff(ai.data, zi.data)
 }
 
@@ -93,8 +103,8 @@ function diff(a, b) {
   return a.reduce((acc, x, i) => acc += Math.abs(x - b[i]), 0)
 }
 
-function copy(a, b) {
-  b.putImageData(a.getImageData(0, 0, cw, ch), 0, 0)
+function copy(a, b, x, y, size) {
+  b.putImageData(a.getImageData(x, y, size, -size), x, y-size)
 }
 
 function get_me_all_the_emoji() {
