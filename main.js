@@ -46,7 +46,7 @@ function go() {
       let [mx, my, msize] = marginize(x, y, size, margin)
       let [c, w, p] = get_image_data([ctx, wsp, pic], mx, my, msize)
 
-      if(test(w, c, p)) {
+      if(test(w.data, c.data, p.data)) {
         drawstr(ctx, e, x, y, size)
         wins++
       } else {
@@ -63,10 +63,10 @@ function go() {
     }
 
     if(size < ratchet_bottom)
-      size = ratchet_bottom
+      size = ratchet_bottom + rand(ratchet_bounce*2+1)
 
     if(size > ratchet_top)
-      size = ratchet_top
+      size = ratchet_top - rand(ratchet_bounce*2+1)
 
     if(!stop)
       requestAnimationFrame(draw)
@@ -98,32 +98,26 @@ function drawstr(ctx, s, x, y, size) {
   ctx.fillText(s, x, y)
 }
 
-function test(a, b, z, x, y, size) { // is a closer to z than b?
-  return score(a, z, x, y, size) < score(b, z, x, y, size)
+function test(a, b, z) {                          // is a closer to z than b?
+  return score(a, z) < score(b, z)
 }
 
-function score(a, z, x, y, size) {
-  let ai = a.getImageData ? a.getImageData(x, y, size, size) : a
-  let zi = z.getImageData ? z.getImageData(x, y, size, size) : z
-  return diff(ai.data, zi.data)
-}
-
-function diff(a, b) {
+function score(a, b) {                            // taxicab metric
   return a.reduce((acc, x, i) => acc += Math.abs(x - b[i]), 0)
-}
-
-function get_me_all_the_emoji() {
-  let q = []
-  for(let i=0; i<2000; i++) { // a magic number
-    let e = String.fromCodePoint(127514 + i) // even more magick!
-    if(ctx.measureText(e).width == 13) // also kind of magick
-      q.push(e)
-  }
-  return q
 }
 
 function rand(n) {
   return Math.floor(Math.random() * n)
+}
+
+function get_me_all_the_emoji() {
+  let q = []
+  for(let i=0; i<2000; i++) {                     // a slightly magic number
+    let e = String.fromCodePoint(127514 + i)      // SUPA MAGICK NUMBER
+    if(ctx.measureText(e).width == 13)            // also kind of magick
+      q.push(e)
+  }
+  return q
 }
 
 let since = (()=>{
