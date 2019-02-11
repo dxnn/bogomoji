@@ -2,7 +2,7 @@
 
 _Emoji rendering in 10^12 easy steps_
 
-Tired of your old, boring photos that show realistic scenes in perfect clarity? Yeah, who isn't? Nobody wants to see those.
+Tired of your old, boring photos that show realistic scenes in perfect clarity? Of course you are. Nobody wants to see those.
 
 Spice things up with new emojigraphs! They're like regular photos, but made entirely of emoji!
 
