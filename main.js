@@ -121,7 +121,7 @@ function get_me_all_the_emoji() {
     let e = String.fromCodePoint(127514 + i)        // SUPA MAGICK NUMBER
     if(ctx.measureText(e).width == 13)              // also kinda magick
       q.push(e)
-    }
+  }
   return q
 }
 
