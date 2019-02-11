@@ -3,7 +3,6 @@ const ctx = el('canvas').getContext('2d')
 const pic = el('picture').getContext('2d')
 const wsp = el('workspace').getContext('2d')
 
-const image_path = 'bf.png'
 const all_the_emoji = get_me_all_the_emoji()
 
 const cw = 1000
@@ -19,10 +18,16 @@ let tries = 0
 let ticks = 0
 let wins = 0
 let stop = true
+let image_path = location.hash.slice(1)
 
-const img = new Image()
-img.src = image_path
-img.onload = ev => pic.drawImage(img, 0, 0)
+if(image_path) set()                                // things start here. unless they don't.
+
+function set() {
+  const img = new Image()
+  img.src = image_path
+  img.crossOrigin = 'Anonymous'                     // CORS light
+  img.onload = ev => pic.drawImage(img, 0, 0),go()  // abuse of notation
+}
 
 function go() {
   let ratchet = ratchet_top
@@ -36,7 +41,7 @@ function go() {
     since(1)
     ticks++
 
-    while(since() < 16) { // 60fps ftw
+    while(since() < 16) {                           // 60fps ftw
       tries++
 
       let x = rand(cw)
@@ -76,7 +81,7 @@ function go() {
 }
 
 function marginize(x, y, size, margin) {
-  let m = size * margin // emoji are squirrely
+  let m = size * margin                             // emoji are squirrely
   let msize = size+m
   let mx = x - m/2
   let my = y - size - m/2
@@ -98,11 +103,11 @@ function drawstr(ctx, s, x, y, size) {
   ctx.fillText(s, x, y)
 }
 
-function test(a, b, z) {                          // is a closer to z than b?
+function test(a, b, z) {                            // is a closer to z than b?
   return score(a, z) < score(b, z)
 }
 
-function score(a, b) {                            // taxicab metric
+function score(a, b) {                              // taxicab metric
   return a.reduce((acc, x, i) => acc += Math.abs(x - b[i]), 0)
 }
 
@@ -112,11 +117,11 @@ function rand(n) {
 
 function get_me_all_the_emoji() {
   let q = []
-  for(let i=0; i<2000; i++) {                     // a slightly magic number
-    let e = String.fromCodePoint(127514 + i)      // SUPA MAGICK NUMBER
-    if(ctx.measureText(e).width == 13)            // also kind of magick
+  for(let i=0; i<2000; i++) {                       // a vaguely magic number
+    let e = String.fromCodePoint(127514 + i)        // SUPA MAGICK NUMBER
+    if(ctx.measureText(e).width == 13)              // also kinda magick
       q.push(e)
-  }
+    }
   return q
 }
 
