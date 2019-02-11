@@ -1,6 +1,6 @@
 # Bogomoji
 
-Emoji rendering in 10^12 easy steps
+_Emoji rendering in 10^12 easy steps_
 
 Tired of your old, boring photos that show realistic scenes in perfect clarity? Yeah, who isn't? Nobody wants to see those.
 
@@ -11,12 +11,12 @@ Kick your insta feed up a notch with emojigraphs -- try it today! Bam! Catchphra
 ## Instructions
 
 1. Download the repo
-2. Find an image*
+2. Find an image [1]
 3. Open index.html#url_of_image_from_step_2
 
 And let the emojification begin!
 
-* You'll need the image to be hosted on a server with permissive CORS settings. Also, this emoji set has limited colors, so yellows and greens are good but greys and browns are harder.
+[1] You'll need the image to be hosted on a server with permissive CORS settings. Also, this emoji set has limited colors, so yellows and greens are good but greys and browns are harder.
 
 ## Todos
 
