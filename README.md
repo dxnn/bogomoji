@@ -31,3 +31,9 @@ And let the emojification begin!
 - Add a github page thing so folks can run it without downloading it
 
 PRs welcome. Please keep it simple, and don't reformat (however much you devices want you to). Also, if you'd like to adopt this repo, it's looking for a good home. It's housebroken and has all its shots.
+
+### Observations
+
+In the beginning, when the emoji are large and rapidly churning it just looks like random noise. The first transition occurs fairly quickly, when the additions slow down and large scale colour patches start to stabilize. The second transition can take awhile to arrive, but when the perceptual shift occurs it's quite sudden -- almost jarring. One moment you're looking at individual pictures of hands and faces and eggplants, and the next all those emoji come together to make a picture of something else entirely. This tends to happen around the time the size ratchet gets down to smaller emoji, where they quickly fill in the fine grained detail.
+
+Part of that filling in process also takes the form of filling in off-colour pieces of larger emoji: the eyes of the sun, the seeds of the kiwi, the holes in a wedge of cheese. My favorite is when a large tennis ball lands in a patch of green, and smaller tennis balls show up to fill in the white lines. This can go down a few levels, giving a nice fractal touch to the proceedings. 
