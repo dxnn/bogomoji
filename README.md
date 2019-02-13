@@ -4,9 +4,7 @@ _Emoji rendering in 10^12 easy steps_
 
 Tired of your old, boring photos that show realistic scenes in perfect clarity? Of course you are. Nobody wants to see those.
 
-Spice things up with new emojigraphs! They're like regular photos, but made entirely of emoji!
-
-Kick your insta feed up a notch with emojigraphs -- try it today! Bam! Catchphrase!
+Emojigraphs use emoji instead of pixels, so they're way more exciting. Convert your pictures into mojisaics to amaze your friends and astound your frenemies.
 
 ## Examples
 
@@ -23,7 +21,7 @@ https://dxnn.github.io/bogomoji/#https://images.pexels.com/photos/160509/ducklin
 1. Download the repo
 2. Open index.html#url_of_image
 
-And let the emojification begin!
+That's all you need to do. There's no build process, no packages, no modules, just ~100 lines of JS. 
 
 Notes: You'll need the image to be hosted on a server with permissive CORS settings. Also, this emoji set has limited colors, so yellows and greens are good but greys and browns are harder. To stop it type `stop = true`. To restart it type `go()`. 
 
@@ -31,15 +29,15 @@ Notes: You'll need the image to be hosted on a server with permissive CORS setti
 
 - Massage the ratchet system -- maybe a leaky integrator over hits adjusts the mean of a normal distribution for drawing size? Probably need to adjust variance over time as well.
 - Parallelize by using offscreen canvas and workers
-- Fix the weird flicker for tall emoji when they first appear
+- Fix the weird flicker for some tall emoji when they first appear
 - Modularize the code so it can be imported into other programs
-- Expand the emoji set, e.g. with colour combinations
-- Maybe add some more UI controls or something
+- Expand the emoji set, e.g. with Fitzpatrick modifiers
+- Maybe add some UI controls or something
 - Make these issues instead of todos
 - Make some video captures of the process
 - Add more examples (maybe a page of good examples, with thumbnails)
 
-PRs welcome. Please keep it simple, and don't reformat (however much your devices may want you to). Also, if you'd like to adopt this repo, it's looking for a good home. It's housebroken and has all its shots.
+PRs welcome. Please keep it simple. Also, if you'd like to adopt this repo, it's looking for a good home. It's housebroken and has all its shots.
 
 ### Observations
 
@@ -59,4 +57,4 @@ The compression phase would definitely take longer than current methods, but giv
 
 What would the proper set of sprites look like? They would probably make significant use of alpha sections -- this emoji renderer certainly likes shapes with strange boundaries. Fractal shapes would likely prove ideal, along with a few solids for building large colour sections quickly. For a few extra bytes colour, rotation, and alpha could be provided, optionally, cutting down the number of sprites needed.
 
-This technique could be combined with other styles, like wavelet compression for very busy scenes or reverse facial detection for rendering faces. (These ideas may be well explored in the literature, if so pointers would be appreciated.)
+This technique could be combined with other styles, like wavelet compression for very busy scenes or reverse facial recognition for rendering faces. (These ideas may be well explored in the literature, if so pointers would be appreciated.)
