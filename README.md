@@ -2,21 +2,30 @@
 
 _Emoji rendering in 10^12 easy steps_
 
-Tired of your old, boring photos that show realistic scenes in perfect clarity? Yeah, who isn't? Nobody wants to see those.
+Tired of your old, boring photos that show realistic scenes in perfect clarity? Of course you are. Nobody wants to see those.
 
 Spice things up with new emojigraphs! They're like regular photos, but made entirely of emoji!
 
 Kick your insta feed up a notch with emojigraphs -- try it today! Bam! Catchphrase!
 
-## Instructions
+## Examples
+
+https://dxnn.github.io/bogomoji/#https://images.pexels.com/photos/705314/pexels-photo-705314.jpeg?h=950
+
+https://dxnn.github.io/bogomoji/#https://images.pexels.com/photos/1882802/pexels-photo-1882802.jpeg?h=950
+
+https://dxnn.github.io/bogomoji/#https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?h=1050
+
+https://dxnn.github.io/bogomoji/#https://images.pexels.com/photos/160509/ducklings-chicks-mama-duck-160509.jpeg?h=850
+
+## Build instructions
 
 1. Download the repo
-2. Find an image [1]
-3. Open index.html#url_of_image_from_step_2
+2. Open index.html#url_of_image
 
 And let the emojification begin!
 
-[1] You'll need the image to be hosted on a server with permissive CORS settings. Also, this emoji set has limited colors, so yellows and greens are good but greys and browns are harder.
+Notes: You'll need the image to be hosted on a server with permissive CORS settings. Also, this emoji set has limited colors, so yellows and greens are good but greys and browns are harder. To stop it type `stop = true`. To restart it type `go()`. 
 
 ## Todos
 
@@ -27,9 +36,8 @@ And let the emojification begin!
 - Expand the emoji set, e.g. with colour combinations
 - Maybe add some more UI controls or something
 - Make these issues instead of todos
-- Add some examples!
 - Make some video captures of the process
-- Add a github page thing so folks can run it without downloading it
+- Add more examples (maybe a page of good examples, with thumbnails)
 
 PRs welcome. Please keep it simple, and don't reformat (however much your devices may want you to). Also, if you'd like to adopt this repo, it's looking for a good home. It's housebroken and has all its shots.
 
