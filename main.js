@@ -9,8 +9,8 @@ const cw = 1000
 const ch = 1000
 const ratchet_top = 255
 const ratchet_bottom = 10
-const ratchet_chance = 0.03
-const ratchet_bounce = 40
+const ratchet_chance = 0.26
+const ratchet_bounce = 30
 const ratchet_step = 1
 const margin = 0.3
 
