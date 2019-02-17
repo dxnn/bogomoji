@@ -115,12 +115,38 @@ function rand(n) {
   return Math.floor(Math.random() * n)
 }
 
+function is_colour_boring(r, g, b){        // if the pixel is not black, white, or red,
+  if (r === 255 && b === 0 && g === 0)     // then it probably belongs to an emoji
+    return true
+  if (r === g && g === b)
+    return r === 0 || r === 255
+  return false
+}
+
+function is_char_emoji(char){
+  let testCanvas = document.createElement("canvas")
+  let miniCtx = testCanvas.getContext('2d')
+  let size = miniCtx.measureText(char).width
+  if (size > 0) {
+    miniCtx.font = `${size}px Arial`;
+    testCanvas.width = testCanvas.height = size
+    miniCtx.fillText(char, 0, size)
+    let imageData = miniCtx.getImageData(0, 0, size, size)
+    let data = imageData.data;
+    for (var i = 0; i < data.length; i += 4){   // step through RBGA channels
+      if (!is_colour_boring(data[i], data[i+1], data[i+2]))
+        return true
+    }
+  }
+  return false
+}
+
 function get_me_all_the_emoji() {
   let q = []
-  for(let i=0; i<2000; i++) {                       // a vaguely magic number
-    let e = String.fromCodePoint(127514 + i)        // SUPA MAGICK NUMBER
-    if(ctx.measureText(e).width == 13)              // also kinda magick
-      q.push(e)
+  for(let i=0; i<2000; i++) {
+    let char = String.fromCodePoint(127514 + i)    // MAGICK #
+    if(is_char_emoji(char))
+      q.push(char)
   }
   return q
 }
