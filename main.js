@@ -119,7 +119,8 @@ function get_me_all_the_emoji() {
   let q = []
   for(let i=0; i<2000; i++) {                       // a vaguely magic number
     let e = String.fromCodePoint(127514 + i)        // SUPA MAGICK NUMBER
-    if(ctx.measureText(e).width == 13)              // also kinda magick
+    let w = ctx.measureText(e).width
+    if(w > 0)
       q.push(e)
   }
   return q
